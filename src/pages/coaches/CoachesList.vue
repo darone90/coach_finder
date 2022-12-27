@@ -3,9 +3,10 @@
         FILTER
     </section>
     <section>
+        <base-card>
         <div class="controll">
-            <button>Refresh</button>
-            <router-link to="/register">Register</router-link>
+            <base-button mode="outline">Refresh</base-button>
+            <base-button link to="/register">Register as Coach</base-button>
         </div>
         <ul v-if="hasCoaches">
             <coach-item v-for="coach in filteredCoaches" 
@@ -18,6 +19,7 @@
             ></coach-item>
         </ul>
         <h3 v-else>No coaches found</h3>
+        </base-card>
     </section>
 </template>
 
@@ -49,4 +51,5 @@ import CoachItem from '@/components/CoachItem.vue';
   display: flex;
   justify-content: space-between;
 }
+
 </style>
