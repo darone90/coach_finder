@@ -35,6 +35,9 @@ export default {
             }
             this.isLoading = false;
             this.$router.replace('/coaches');
+        },
+        handleError() {
+            this.error = null;
         }
     },
     
