@@ -1,4 +1,5 @@
 <template>
+    <div>
     <base-dialog :show="!!error" title="An error occurred!" @close="handleError">
         <p>{{ error }}</p>
     </base-dialog>
@@ -11,6 +12,7 @@
         <coach-form @save-data="saveData"></coach-form>
     </base-card>
    </section>
+   </div>
 </template>
 
 <script>
