@@ -64,10 +64,11 @@ export default {
           body: JSON.stringify(coach),
         });
 
-        // const responseData = await response.json();
+        const responseData = await response.json();
 
         if(!response.ok) {
-          //error handle
+          const error = new Error(responseData.message || 'Failed during data transfer')
+          throw error;
         }
 
         context.commit('registerCoach', {
@@ -81,8 +82,9 @@ export default {
         const responseData = await response.json();
 
         if(!response.ok) {
-          //error handle here
-        }
+          const error = new Error(responseData.message || 'Failed to fetch!');
+          throw error;
+        };
 
         const coaches = [];
 

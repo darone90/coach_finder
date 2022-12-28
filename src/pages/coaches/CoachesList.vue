@@ -1,4 +1,7 @@
 <template>
+    <base-dialog :show="!!error" title="An error occurred!" @close="handleError">
+        <p>{{ error }}</p>
+    </base-dialog>
     <section>
         <coach-filter @change-filter="setFilters"></coach-filter>
     </section>
@@ -42,7 +45,8 @@ import CoachFilter from '@/components/CoachFilter.vue';
                     backend: true,
                     career: true
                 },
-                isLoading: false
+                isLoading: false,
+                error: null
             }
         },
         computed: {
@@ -78,9 +82,19 @@ import CoachFilter from '@/components/CoachFilter.vue';
                 this.activeFilters = updateFilters;
             },
             async loadCoaches() {
+
                 this.isLoading = true;
-                await this.$store.dispatch('loadCoaches');
+                try {
+                    await this.$store.dispatch('loadCoaches');
+                } catch (error) {
+                    this.error = error.message || 'Something went wrong!';
+                }
+               
                 this.isLoading = false;
+            },
+
+            handleError() {
+                this.error = null
             }
         }
     }
