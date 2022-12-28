@@ -40,7 +40,12 @@ export default {
     mutations: {
       registerCoach(state, payload) {
         state.coaches.push(payload)
+      },
+      setCoaches(state, payload) {
+        state.coaches = payload
       }
+
+
     },
     actions: {
       async registerCoach(context, data) {
@@ -69,6 +74,31 @@ export default {
           ...coach,
           id: userId
         })
+      },
+      async loadCoaches(context) {
+        const response = await fetch(`https://vue-test-7513b-default-rtdb.europe-west1.firebasedatabase.app/coaches.json`);
+
+        const responseData = await response.json();
+
+        if(!response.ok) {
+          //error handle here
+        }
+
+        const coaches = [];
+
+        for (const key in responseData) {
+          const coach = {
+            id: key,
+            firstName: responseData[key].firstName,
+            lastName: responseData[key].lastName,
+            description: responseData[key].description,
+            hourlyRate: responseData[key].hourlyRate,
+            areas: responseData[key].areas,
+          }
+          coaches.push(coach)
+        }
+
+        context.commit('setCoaches', coaches)
       }
     }
 }
