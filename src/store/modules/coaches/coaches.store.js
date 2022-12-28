@@ -43,7 +43,8 @@ export default {
       }
     },
     actions: {
-      registerCoach(context, data) {
+      async registerCoach(context, data) {
+        const userId = context.rootGetters.userId;
         const coach = {
           id: context.rootGetters.userId,
           firstName: data.first,
@@ -53,7 +54,21 @@ export default {
           areas: data.areas
         }
 
-        context.commit('registerCoach', coach)
+        const response = await fetch(`https://vue-test-7513b-default-rtdb.europe-west1.firebasedatabase.app/coaches/${userId}.json`, {
+          method: 'PUT',
+          body: JSON.stringify(coach),
+        });
+
+        // const responseData = await response.json();
+
+        if(!response.ok) {
+          //error handle
+        }
+
+        context.commit('registerCoach', {
+          ...coach,
+          id: userId
+        })
       }
     }
 }
